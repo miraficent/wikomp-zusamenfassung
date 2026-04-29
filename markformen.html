@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marktformen & Preisbildung</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f5f2ed; color: #1a1614; padding: 1.5rem; }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 1.2rem; flex-wrap: wrap; }
+  .tab { padding: 8px 18px; border-radius: 8px; border: 1px solid #ccc; background: #eee; color: #555; font-size: 13px; cursor: pointer; transition: all .18s; font-family: inherit; }
+  .tab:hover { background: #fff; color: #111; }
+  .tab.active { background: #fff; color: #111; border-color: #888; font-weight: 500; }
+  .tab.polypol.active { border-color: #1D9E75; color: #1D9E75; }
+  .tab.oligo.active   { border-color: #BA7517; color: #BA7517; }
+  .tab.mono.active    { border-color: #993C1D; color: #993C1D; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
+
+  .card { background: #fff; border: 1px solid #e0d8d0; border-radius: 12px; padding: 1rem 1.25rem; }
+  .card-title { font-size: 12px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .8rem; }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; margin-bottom: .6rem; }
+
+  .facts { display: flex; flex-direction: column; gap: .5rem; }
+  .fact { display: flex; align-items: flex-start; gap: .5rem; font-size: 13px; color: #555; line-height: 1.5; }
+  .fact-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  .examples { margin-top: .8rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+  .ex-tag { background: #f5f2ed; border: 1px solid #ddd; border-radius: 20px; padding: 3px 9px; font-size: 12px; color: #666; cursor: default; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .shift-controls { margin-top: .8rem; display: flex; flex-wrap: wrap; gap: .6rem; }
+  .shift-btn { padding: 6px 12px; border-radius: 8px; border: 1px solid #ccc; background: #f0ede8; color: #555; font-size: 12px; cursor: pointer; font-family: inherit; transition: all .15s; }
+  .shift-btn:hover { background: #fff; color: #111; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: .5rem; font-size: 12px; color: #666; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 18px; height: 3px; border-radius: 2px; }
+  .legend-circle { width: 10px; height: 10px; border-radius: 50%; }
+
+  .price-info { margin-top: .8rem; padding: .7rem 1rem; border-radius: 8px; background: #f5f2ed; font-size: 13px; line-height: 1.6; color: #555; }
+  .price-info strong { color: #111; }
+
+  .verdict { margin-top: .6rem; padding: .6rem 1rem; border-radius: 8px; font-size: 12px; line-height: 1.5; }
+
+  canvas { width: 100% !important; height: 280px !important; }
+  .chart-wrap { position: relative; width: 100%; height: 280px; }
+</style>
+</head>
+<body>
+
+<h2 style="margin-bottom:1rem;font-size:1.3rem;font-weight:600">📊 Marktformen & Preisbildung</h2>
+
+<div class="tabs">
+  <button class="tab polypol active" onclick="show('polypol')">📊 Polypol</button>
+  <button class="tab oligo"          onclick="show('oligo')">🏭 Oligopol</button>
+  <button class="tab mono"           onclick="show('mono')">👑 Monopol</button>
+</div>
+
+<!-- ═══ POLYPOL ═══ -->
+<div id="panel-polypol" class="panel active">
+  <div class="grid">
+    <div>
+      <div class="chart-wrap"><canvas id="chart-polypol"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Angebotskurve (A)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#185FA5"></div>Nachfragekurve (N)</div>
+        <div class="legend-item"><div class="legend-circle" style="background:#E24B4A"></div>Gleichgewicht P*</div>
+      </div>
+      <div class="shift-controls">
+        <button class="shift-btn" onclick="shiftPoly('nd', 1)">Nachfrage steigt ↑</button>
+        <button class="shift-btn" onclick="shiftPoly('nd',-1)">Nachfrage sinkt ↓</button>
+        <button class="shift-btn" onclick="shiftPoly('as', 1)">Angebot steigt ↑</button>
+        <button class="shift-btn" onclick="shiftPoly('as',-1)">Angebot sinkt ↓</button>
+        <button class="shift-btn" onclick="resetPoly()">↺ Reset</button>
+      </div>
+    </div>
+    <div class="card">
+      <span class="badge" style="background:#E1F5EE;color:#085041">Polypol</span>
+      <div class="card-title">Merkmale</div>
+      <div class="facts">
+        <div class="fact"><span class="fact-icon">👥</span><span><strong>Viele</strong> Anbieter und viele Nachfrager</span></div>
+        <div class="fact"><span class="fact-icon">⚖️</span><span>Preis bildet sich <strong>durch den Markt</strong> (Schnittpunkt A- und N-Kurve = P*)</span></div>
+        <div class="fact"><span class="fact-icon">🔄</span><span>Kein einzelner Anbieter hat Einfluss auf den Preis</span></div>
+        <div class="fact"><span class="fact-icon">✅</span><span>Größte Auswahl, fairste Preise für Verbraucher</span></div>
+        <div class="fact"><span class="fact-icon">📉</span><span>Gefahr: Verdrängung kleiner Anbieter</span></div>
+      </div>
+      <div class="examples">
+        <span class="ex-tag">🥦 Gemüsemarkt</span>
+        <span class="ex-tag">🍽️ Restaurants</span>
+        <span class="ex-tag">✂️ Friseure</span>
+      </div>
+      <div class="price-info" id="poly-info">
+        Gleichgewichtspreis <strong>P* = 5 €</strong> · Gleichgewichtsmenge <strong>M* = 5</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ OLIGOPOL ═══ -->
+<div id="panel-oligo" class="panel">
+  <div class="grid">
+    <div>
+      <div class="chart-wrap"><canvas id="chart-oligo"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Angebotskurve (A)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#185FA5"></div>Nachfragekurve (N)</div>
+        <div class="legend-item"><div class="legend-circle" style="background:#E24B4A"></div>Gleichgewicht P*</div>
+        <div class="legend-item"><div class="legend-circle" style="background:#BA7517"></div>Oligopolpreis P**</div>
+      </div>
+      <div class="shift-controls">
+        <button class="shift-btn" onclick="showKartell(true)">⚠️ Kartellabsprache</button>
+        <button class="shift-btn" onclick="showKartell(false)">↺ Ohne Absprache</button>
+      </div>
+    </div>
+    <div class="card">
+      <span class="badge" style="background:#FAEEDA;color:#633806">Oligopol</span>
+      <div class="card-title">Merkmale</div>
+      <div class="facts">
+        <div class="fact"><span class="fact-icon">🏭</span><span><strong>Wenige</strong> Anbieter, viele Nachfrager</span></div>
+        <div class="fact"><span class="fact-icon">💬</span><span>Absprachen möglich → Preis oft <strong>über</strong> Gleichgewicht (P** &gt; P*)</span></div>
+        <div class="fact"><span class="fact-icon">⚠️</span><span>Kartellbildung ist <strong>illegal</strong> (§ GWB)</span></div>
+        <div class="fact"><span class="fact-icon">📊</span><span>Mittlere Auswahl, Preise können künstlich hoch sein</span></div>
+        <div class="fact"><span class="fact-icon">🔍</span><span>Kartellamt überwacht den Markt</span></div>
+      </div>
+      <div class="examples">
+        <span class="ex-tag">📱 O2, Vodafone, Telekom</span>
+        <span class="ex-tag">⛽ Tankstellen</span>
+        <span class="ex-tag">🛒 Rewe, Edeka, Lidl</span>
+      </div>
+      <div class="price-info" id="oligo-info">
+        Gleichgewichtspreis <strong>P* = 5 €</strong> · Aktiviere Kartellabsprache um P** zu sehen
+      </div>
+      <div class="verdict" id="oligo-verdict" style="display:none;background:#FAEEDA;color:#633806">
+        ⚠️ Durch Absprache steigt der Preis auf <strong>P** = 8 €</strong> → Verbraucher zahlen 60% mehr!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MONOPOL ═══ -->
+<div id="panel-mono" class="panel">
+  <div class="grid">
+    <div>
+      <div class="chart-wrap"><canvas id="chart-mono"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#185FA5"></div>Nachfragekurve (N)</div>
+        <div class="legend-item"><div class="legend-circle" style="background:#993C1D"></div>Monopolpreis P_M</div>
+        <div class="legend-item"><div class="legend-circle" style="background:#E24B4A;opacity:.4"></div>Wettbewerbspreis P* (fiktiv)</div>
+      </div>
+      <div class="shift-controls">
+        <button class="shift-btn" onclick="moveMono(1)">Monopolist hebt Preis ↑</button>
+        <button class="shift-btn" onclick="moveMono(-1)">Monopolist senkt Preis ↓</button>
+        <button class="shift-btn" onclick="resetMono()">↺ Reset</button>
+      </div>
+    </div>
+    <div class="card">
+      <span class="badge" style="background:#FAECE7;color:#4A1B0C">Monopol</span>
+      <div class="card-title">Merkmale</div>
+      <div class="facts">
+        <div class="fact"><span class="fact-icon">👑</span><span><strong>Ein</strong> Anbieter, viele Nachfrager</span></div>
+        <div class="fact"><span class="fact-icon">🚫</span><span><strong>Keine Angebotskurve!</strong> Der Monopolist setzt den Preis selbst</span></div>
+        <div class="fact"><span class="fact-icon">📈</span><span>Preis weit über Wettbewerbsniveau möglich</span></div>
+        <div class="fact"><span class="fact-icon">❌</span><span>Keine Auswahl, Qualität kann sinken</span></div>
+        <div class="fact"><span class="fact-icon">⚖️</span><span>Staat reguliert (z.B. Bundesnetzagentur)</span></div>
+      </div>
+      <div class="examples">
+        <span class="ex-tag">🚂 Schienennetz DB</span>
+        <span class="ex-tag">📞 Früher: Telekom</span>
+        <span class="ex-tag">💧 Wasserversorgung</span>
+      </div>
+      <div class="price-info" id="mono-info">
+        Monopolpreis <strong>P_M = 8 €</strong> · Wettbewerbspreis wäre <strong>P* = 5 €</strong>
+      </div>
+      <div class="verdict" style="background:#FAECE7;color:#4A1B0C;margin-top:.6rem;padding:.6rem 1rem;border-radius:8px;font-size:12px;line-height:1.5">
+        🔴 Verbraucher haben <strong>keinen Einfluss</strong> auf den Preis – der Monopolist entscheidet allein.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const W = 9, H = 9;
+const Qs = Array.from({length: W}, (_, i) => i + 1);
+
+function supply(q, shift) { return Math.min(H, Math.max(1, q + shift)); }
+function demand(q, shift) { return Math.min(H, Math.max(1, W + 1 - q + shift)); }
+function equilibrium(ndShift, asShift) {
+  let q = (W + 1 + ndShift - asShift) / 2;
+  let p = q + asShift;
+  return { q: Math.round(q * 10) / 10, p: Math.round(p * 10) / 10 };
+}
+function demand_inv(p) { return W + 1 - p; }
+
+function chartOpts(xl, yl) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 400 },
+    plugins: { legend: { display: false } },
+    scales: {
+      x: {
+        title: { display: true, text: xl, font: { size: 11 }, color: '#888' },
+        min: 1, max: W,
+        ticks: { font: { size: 11 } },
+        grid: { color: 'rgba(0,0,0,.07)' }
+      },
+      y: {
+        title: { display: true, text: yl, font: { size: 11 }, color: '#888' },
+        min: 1, max: H,
+        ticks: { font: { size: 11 }, callback: v => v + ' €' },
+        grid: { color: 'rgba(0,0,0,.07)' }
+      }
+    }
+  };
+}
+
+// ── POLYPOL ──────────────────────────────────────────────────────────────────
+let polyNd = 0, polyAs = 0, polyChart;
+
+function buildPolyChart() {
+  const ctx = document.getElementById('chart-polypol').getContext('2d');
+  const { q, p } = equilibrium(polyNd, polyAs);
+  polyChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Qs,
+      datasets: [
+        { label: 'Angebot',      data: Qs.map(q => supply(q, polyAs)), borderColor: '#1D9E75', borderWidth: 2.5, pointRadius: 0, tension: .3, fill: false },
+        { label: 'Nachfrage',    data: Qs.map(q => demand(q, polyNd)), borderColor: '#185FA5', borderWidth: 2.5, pointRadius: 0, tension: .3, fill: false },
+        { label: 'Gleichgewicht',data: [{ x: q, y: p }], type: 'scatter', pointBackgroundColor: '#E24B4A', pointRadius: 7, pointHoverRadius: 9, showLine: false }
+      ]
+    },
+    options: chartOpts('Menge Q', 'Preis P (€)')
+  });
+}
+
+function shiftPoly(what, dir) {
+  if (what === 'nd') polyNd += dir; else polyAs += dir;
+  polyNd = Math.max(-2, Math.min(2, polyNd));
+  polyAs = Math.max(-2, Math.min(2, polyAs));
+  updatePolyChart();
+}
+
+function resetPoly() { polyNd = 0; polyAs = 0; updatePolyChart(); }
+
+function updatePolyChart() {
+  const { q, p } = equilibrium(polyNd, polyAs);
+  polyChart.data.datasets[0].data = Qs.map(x => supply(x, polyAs));
+  polyChart.data.datasets[1].data = Qs.map(x => demand(x, polyNd));
+  polyChart.data.datasets[2].data = [{ x: q, y: p }];
+  polyChart.update();
+  document.getElementById('poly-info').innerHTML =
+    'Gleichgewichtspreis <strong>P* = ' + p + ' €</strong> · Gleichgewichtsmenge <strong>M* = ' + q + '</strong>' +
+    (polyNd !== 0 ? ' · Nachfrage ' + (polyNd > 0 ? '↑' : '↓') : '') +
+    (polyAs !== 0 ? ' · Angebot '   + (polyAs > 0 ? '↑' : '↓') : '');
+}
+
+// ── OLIGOPOL ─────────────────────────────────────────────────────────────────
+let oligoChart;
+
+function buildOligoChart() {
+  const ctx = document.getElementById('chart-oligo').getContext('2d');
+  oligoChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Qs,
+      datasets: [
+        { label: 'Angebot',      data: Qs.map(q => supply(q, 0)), borderColor: '#1D9E75', borderWidth: 2.5, pointRadius: 0, tension: .3, fill: false },
+        { label: 'Nachfrage',    data: Qs.map(q => demand(q, 0)), borderColor: '#185FA5', borderWidth: 2.5, pointRadius: 0, tension: .3, fill: false },
+        { label: 'P*',           data: [{ x: 5, y: 5 }], type: 'scatter', pointBackgroundColor: '#E24B4A', pointRadius: 6, showLine: false },
+        { label: 'P** Punkt',    data: [], type: 'scatter', pointBackgroundColor: '#BA7517', pointRadius: 8, showLine: false },
+        { label: 'Kartell-Linie',data: [], borderColor: '#BA7517', borderDash: [6, 4], borderWidth: 1.5, pointRadius: 0, fill: false }
+      ]
+    },
+    options: chartOpts('Menge Q', 'Preis P (€)')
+  });
+}
+
+function showKartell(on) {
+  if (on) {
+    oligoChart.data.datasets[3].data = [{ x: 2, y: 8 }];
+    oligoChart.data.datasets[4].data = Qs.map(q => ({ x: q, y: 8 }));
+    document.getElementById('oligo-info').innerHTML =
+      'Gleichgewichtspreis <strong>P* = 5 €</strong> · Kartellpreis <strong style="color:#993C1D">P** = 8 €</strong> → +60%!';
+    document.getElementById('oligo-verdict').style.display = 'block';
+  } else {
+    oligoChart.data.datasets[3].data = [];
+    oligoChart.data.datasets[4].data = [];
+    document.getElementById('oligo-info').innerHTML =
+      'Gleichgewichtspreis <strong>P* = 5 €</strong> · Aktiviere Kartellabsprache um P** zu sehen';
+    document.getElementById('oligo-verdict').style.display = 'none';
+  }
+  oligoChart.update();
+}
+
+// ── MONOPOL ──────────────────────────────────────────────────────────────────
+let monoChart, monoPrice = 8;
+
+function buildMonoChart() {
+  const ctx = document.getElementById('chart-mono').getContext('2d');
+  monoChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Qs,
+      datasets: [
+        { label: 'Nachfrage',    data: Qs.map(q => demand(q, 0)), borderColor: '#185FA5', borderWidth: 2.5, pointRadius: 0, tension: .3, fill: false },
+        { label: 'P_M Linie',   data: Qs.map(q => ({ x: q, y: monoPrice })), borderColor: '#993C1D', borderDash: [5, 4], borderWidth: 2, pointRadius: 0, fill: false },
+        { label: 'P_M Punkt',   data: [{ x: demand_inv(monoPrice), y: monoPrice }], type: 'scatter', pointBackgroundColor: '#993C1D', pointRadius: 8, showLine: false },
+        { label: 'P* fiktiv',   data: [{ x: 5, y: 5 }], type: 'scatter', pointBackgroundColor: 'rgba(226,75,74,.35)', pointRadius: 5, showLine: false },
+        { label: 'P* Linie',    data: Qs.map(q => ({ x: q, y: 5 })), borderColor: 'rgba(226,75,74,.25)', borderDash: [3, 4], borderWidth: 1, pointRadius: 0, fill: false }
+      ]
+    },
+    options: chartOpts('Menge Q', 'Preis P (€)')
+  });
+}
+
+function moveMono(dir) {
+  monoPrice = Math.max(3, Math.min(9, monoPrice + dir));
+  const q = demand_inv(monoPrice);
+  monoChart.data.datasets[1].data = Qs.map(x => ({ x: x, y: monoPrice }));
+  monoChart.data.datasets[2].data = [{ x: q, y: monoPrice }];
+  monoChart.update();
+  document.getElementById('mono-info').innerHTML =
+    'Monopolpreis <strong>P_M = ' + monoPrice + ' €</strong> · Abgesetzte Menge: <strong>' + q + '</strong> · Wettbewerbspreis wäre <strong>P* = 5 €</strong>';
+}
+
+function resetMono() { monoPrice = 8; moveMono(0); }
+
+// ── Tab-Wechsel ───────────────────────────────────────────────────────────────
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelector('.tab.' + id).classList.add('active');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  buildPolyChart();
+  buildOligoChart();
+  buildMonoChart();
+});
+</script>
+</body>
+</html>

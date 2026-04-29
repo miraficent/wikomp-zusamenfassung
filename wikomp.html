@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WIKOPM – Zusammenfassung</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #f5f2ed;
+    --surface: #ffffff;
+    --surface2: #faf8f5;
+    --accent: #c0392b;
+    --accent2: #e67e22;
+    --accent3: #2980b9;
+    --text: #1a1614;
+    --text-muted: #6b5e58;
+    --border: #e8e0d8;
+    --tag-bg: #fde8e6;
+    --tag-text: #c0392b;
+    --green: #27ae60;
+    --green-bg: #eafaf1;
+    --red: #c0392b;
+    --red-bg: #fde8e6;
+    --yellow-bg: #fef9e7;
+    --yellow: #f39c12;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* STICKY TOC */
+  .toc-sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 260px;
+    background: var(--surface);
+    border-right: 2px solid var(--border);
+    overflow-y: auto;
+    z-index: 100;
+    padding: 0 0 2rem 0;
+  }
+
+  .toc-header {
+    background: var(--accent);
+    color: white;
+    padding: 1.4rem 1.2rem 1rem;
+    position: sticky;
+    top: 0;
+  }
+
+  .toc-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+  }
+
+  .toc-header p {
+    font-size: 0.72rem;
+    opacity: 0.85;
+    margin-top: 0.2rem;
+    font-weight: 300;
+  }
+
+  .toc-list { padding: 0.8rem 0; }
+
+  .toc-section {
+    padding: 0.2rem 0;
+  }
+
+  .toc-section-title {
+    display: block;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    cursor: default;
+  }
+
+  .toc-link {
+    display: block;
+    padding: 0.35rem 1.2rem 0.35rem 1.5rem;
+    font-size: 0.82rem;
+    color: var(--text);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+
+  .toc-link:hover {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: var(--tag-bg);
+  }
+
+  .toc-sub-link {
+    padding-left: 2.2rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .toc-sub-link:hover {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: var(--tag-bg);
+  }
+  .more_info{
+    color: var(--green);
+    font-weight: 900;
+  }
+  /* MAIN */
+  .main {
+    margin-left: 260px;
+    padding: 2.5rem 2.5rem 4rem;
+    max-width: 960px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--accent) 0%, #922b21 100%);
+    color: white;
+    padding: 3rem 2.5rem;
+    border-radius: 16px;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: 60px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    font-weight: 300;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+
+  .hero-tag {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  /* CHAPTER */
+  .chapter {
+    margin-bottom: 3.5rem;
+  }
+
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .chapter-num {
+    background: var(--accent);
+    color: white;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .chapter-num.blue { background: var(--accent3); }
+  .chapter-num.orange { background: var(--accent2); }
+  .chapter-num.green { background: var(--green); }
+
+  .chapter-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--text);
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 2.5rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  /* TABLES */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    font-size: 0.85rem;
+  }
+
+  thead tr {
+    background: var(--accent);
+    color: white;
+  }
+
+  thead.blue tr { background: var(--accent3); }
+  thead.green tr { background: var(--green); }
+  thead.orange tr { background: var(--accent2); }
+
+  th {
+    padding: 0.65rem 0.9rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+  }
+
+  td {
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--surface2); }
+  tbody tr:hover { background: #f0ede8; }
+
+  /* BADGES */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-red { background: var(--red-bg); color: var(--red); }
+  .badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
+  .badge-blue { background: #eaf3fb; color: var(--accent3); }
+
+  /* ALERT */
+  .alert {
+    padding: 0.9rem 1.1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+
+  .alert-warning {
+    background: var(--yellow-bg);
+    border: 1px solid #fad27a;
+    color: #7d5b00;
+  }
+
+  .alert-info {
+    background: #eaf3fb;
+    border: 1px solid #a9d0f5;
+    color: #1a5276;
+  }
+
+  .alert-success {
+    background: var(--green-bg);
+    border: 1px solid #a9dfbf;
+    color: #1e8449;
+  }
+
+  .alert-danger {
+    background: var(--red-bg);
+    border: 1px solid #f1948a;
+    color: #922b21;
+  }
+
+  .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; }
+
+  /* FORMULA BOX */
+  .formula {
+    background: #1a1614;
+    color: #f0e6d3;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.88rem;
+    margin: 0.8rem 0;
+  }
+
+  .formula span { color: #e67e22; font-weight: bold; }
+
+  /* GRID */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* COMPARISON BLOCK */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .compare-col {
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+  }
+
+  .compare-col h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+
+  .compare-col ul { list-style: none; }
+  .compare-col ul li { padding: 0.2rem 0; }
+  .compare-col ul li::before { content: '→ '; opacity: 0.5; }
+
+  .compare-col.positive { background: var(--green-bg); color: #1a5c2e; }
+  .compare-col.positive h4 { color: var(--green); }
+  .compare-col.negative { background: var(--red-bg); color: #7b2012; }
+  .compare-col.negative h4 { color: var(--red); }
+
+  /* TIMELINE */
+  .timeline {
+    padding: 0.5rem 0;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    align-items: flex-start;
+  }
+
+  .timeline-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 0.45rem;
+    flex-shrink: 0;
+  }
+
+  .timeline-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 120px;
+  }
+
+  .timeline-text { font-size: 0.88rem; }
+
+  /* PHASE CARDS */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .phase-card {
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    text-align: center;
+    border: 2px solid transparent;
+  }
+
+  .phase-card h4 {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .phase-card p { font-size: 0.76rem; opacity: 0.85; }
+
+  .phase-green { background: var(--green-bg); color: #1a5c2e; border-color: #a9dfbf; }
+  .phase-blue { background: #eaf3fb; color: #1a5276; border-color: #a9d0f5; }
+  .phase-orange { background: var(--yellow-bg); color: #7d5b00; border-color: #fad27a; }
+  .phase-red { background: var(--red-bg); color: #922b21; border-color: #f1948a; }
+
+  /* RECHTSFORM TABLE special */
+  .rf-table thead tr { background: #2c3e50; }
+
+  /* SCROLLBAR */
+  .toc-sidebar::-webkit-scrollbar { width: 4px; }
+  .toc-sidebar::-webkit-scrollbar-track { background: transparent; }
+  .toc-sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* BACK TO TOP */
+  .back-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--accent);
+    color: white;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.2s;
+    z-index: 200;
+  }
+
+  .back-top:hover { transform: translateY(-3px); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .toc-sidebar { display: none; }
+    .main { margin-left: 0; padding: 1.5rem; }
+    .phases { grid-template-columns: 1fr 1fr; }
+    .grid-2, .compare { grid-template-columns: 1fr; }
+  }
+
+  h3.sub { font-size: 0.95rem; font-weight: 600; margin: 1.2rem 0 0.6rem; color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR TOC -->
+<nav class="toc-sidebar">
+  <div class="toc-header">
+    <h2>📚 WIKOPM</h2>
+    <p>Zusammenfassung · Inhaltsverzeichnis</p>
+  </div>
+  <div class="toc-list">
+
+    <div class="toc-section">
+      <span class="toc-section-title">I. Berufsausbildung</span>
+      <a href="#duale-ausbildung" class="toc-link">Duale Berufsausbildung</a>
+      <a href="#beendigung" class="toc-link toc-sub-link">Beendigung (§ 21 BBiG)</a>
+    </div>
+
+    <div class="toc-section">
+      <span class="toc-section-title">II. Arbeitsrecht</span>
+      <a href="#arbeitsvertrag" class="toc-link">Arbeitsvertrag</a>
+      <a href="#befristung" class="toc-link toc-sub-link">Befristeter Arbeitsvertrag</a>
+      <a href="#kuendigung" class="toc-link toc-sub-link">Kündigungsfristen</a>
+      <a href="#urlaub" class="toc-link toc-sub-link">Urlaub (BUrlG)</a>
+      <a href="#kuendigungsschutz" class="toc-link toc-sub-link">Kündigungsschutz (KSchG)</a>
+      <a href="#zeugnis" class="toc-link toc-sub-link">Arbeitszeugnis</a>
+      <a href="#bewerbung" class="toc-link toc-sub-link">Bewerbungsgespräch</a>
+      <a href="#lohnfortzahlung" class="toc-link toc-sub-link">Lohnfortzahlung Krankheit</a>
+      <a href="#betriebsrat" class="toc-link">Betriebsrat & Mitbestimmung</a>
+      <a href="#gewerkschaft" class="toc-link toc-sub-link">Gewerkschaft & Tarifvertrag</a>
+      <a href="#nettolohn" class="toc-link">Brutto- & Nettolohn</a>
+      <a href="#einkommensteuer" class="toc-link toc-sub-link">Einkommensteuer</a>
+      <a href="#arbeitsschutz" class="toc-link">Arbeitszeitgesetze</a>
+      <a href="#mutterschutz" class="toc-link toc-sub-link">Mutterschutz (MuSchG)</a>
+    </div>
+
+    <div class="toc-section">
+      <span class="toc-section-title">III. Vertragsrecht & BGB</span>
+      <a href="#rechtsgeschaefte" class="toc-link">Rechtsgeschäfte</a>
+      <a href="#willenserklarung" class="toc-link toc-sub-link">Willenserklärung</a>
+      <a href="#kaufvertrag" class="toc-link">Kaufvertrag</a>
+      <a href="#eigentumsübertragung" class="toc-link toc-sub-link">Eigentumsübertragung</a>
+      <a href="#maengelrechte" class="toc-link toc-sub-link">Mängelrechte</a>
+      <a href="#widerruf" class="toc-link toc-sub-link">Widerrufsrecht</a>
+      <a href="#agb" class="toc-link toc-sub-link">AGB</a>
+    </div>
+
+    <div class="toc-section">
+      <span class="toc-section-title">IV. Finanzen & Wirtschaft</span>
+      <a href="#kredit" class="toc-link">Kredit & Haushalt</a>
+      <a href="#versicherungen" class="toc-link toc-sub-link">Versicherungen</a>
+      <a href="#zahlungsarten" class="toc-link toc-sub-link">Zahlungsarten</a>
+      <a href="#marktformen" class="toc-link">Marktformen & Preisbildung</a>
+      <a href="#konjunktur" class="toc-link">Konjunkturzyklus</a>
+      <a href="#staatlich" class="toc-link toc-sub-link">Staatliche Einflussnahme</a>
+      <a href="#inflation" class="toc-link toc-sub-link">Inflation & VPI</a>
+      <a href="#rechtsformen" class="toc-link">Rechtsformen</a>
+      <a href="#selbststaendigkeit" class="toc-link toc-sub-link">Selbstständigkeit</a>
+      <a href="#formeln" class="toc-link">📐 Alle Formeln</a>
+    </div>
+
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <div id="top" class="hero">
+    <h1>WIKOPM<br>Zusammenfassung</h1>
+    <p>Wirtschaft, Recht & Gesellschaft · Prüfungsvorbereitung</p>
+    <div class="hero-tags">
+      <span class="hero-tag">📋 Arbeitsrecht</span>
+      <span class="hero-tag">⚖️ Vertragsrecht BGB</span>
+      <span class="hero-tag">💰 Finanzen</span>
+      <span class="hero-tag">📈 Wirtschaft</span>
+      <span class="hero-tag">🏢 Unternehmensrecht</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       I. BERUFSAUSBILDUNG
+  ══════════════════════════════════════════ -->
+  <div class="chapter" id="duale-ausbildung">
+    <div class="chapter-header">
+      <div class="chapter-num">I</div>
+      <h2 class="chapter-title">📚 Duale Berufsausbildung</h2>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Die 4 Hauptpunkte</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Hauptpunkt</th><th>Details 1</th><th>Details 2</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Lernorte</strong></td><td>Betrieb (Praxis)</td><td>Berufsschule (Theorie)</td></tr>
+            <tr><td><strong>Prüfungen</strong></td><td>Zwischenprüfung (Kammer)</td><td>Abschlussprüfung (Kammer)</td></tr>
+            <tr><td><strong>Dauer</strong></td><td>Mindestens 2 Jahre</td><td>Höchstens 3,5 Jahre</td></tr>
+            <tr><td><strong>Vergütung</strong></td><td>Angemessen, gesetzlich geregelt</td><td>Jährlich steigend</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Rechte & Pflichten des Azubis</h3>
+      <div class="compare">
+        <div class="compare-col positive">
+          <h4>✅ Rechte</h4>
+          <ul>
+            <li>Recht auf Vergütung</li>
+            <li>Recht auf bezahlten Urlaub</li>
+            <li>Ausbildung gemäß Ausbildungsordnung</li>
+            <li>Freistellung für Berufsschule</li>
+            <li>Kostenfreie Ausbildungsmittel</li>
+            <li>Zeugnis bei Ausbildungsende</li>
+          </ul>
+        </div>
+        <div class="compare-col negative">
+          <h4>⚠️ Pflichten</h4>
+          <ul>
+            <li>Sorgfaltspflicht</li>
+            <li>Weisungsgebundenheit</li>
+            <li>Schweigepflicht</li>
+            <li>Berichtsheft führen</li>
+            <li>Berufsschulpflicht</li>
+            <li>Krankmeldepflicht</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <span><strong>Immer:</strong> Kündigung / Abmahnung schriftlich + mit Begründung!</span>
+      </div>
+    </div>
+
+    <div class="section" id="beendigung">
+      <h3 class="section-title">Beendigung der Ausbildung (§ 21 BBiG)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Situation</th><th>Ausbildungsende</th></tr></thead>
+          <tbody>
+            <tr><td>Prüfung <strong>nicht</strong> bestanden</td><td>31. August (laut Vertrag)</td></tr>
+            <tr><td>Prüfung <strong>bestanden</strong> (vor Vertragsende)</td><td><span class="badge badge-green">✅</span> Mit Bekanntgabe des Ergebnisses!</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">📅 Beispiel Zeitstrahl</div>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-dot"></div><div><span class="timeline-label">10.–12. Mai</span></div><div class="timeline-text">Schriftliche Prüfung</div></div>
+          <div class="timeline-item"><div class="timeline-dot" style="background:var(--green)"></div><div><span class="timeline-label">28. Juli</span></div><div class="timeline-text">Praktische Prüfung → <strong>AUSBILDUNGSENDE (§ 21 BBiG)</strong></div></div>
+          <div class="timeline-item"><div class="timeline-dot" style="background:#ccc"></div><div><span class="timeline-label">31. August</span></div><div class="timeline-text"><em>Entfällt – Prüfung vorher bestanden!</em></div></div>
+          <div class="timeline-item"><div class="timeline-dot" style="background:var(--accent3)"></div><div><span class="timeline-label">20. September</span></div><div class="timeline-text">Übergabe Gesellenbrief</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       II. ARBEITSRECHT
+  ══════════════════════════════════════════ -->
+  <div class="chapter" id="arbeitsrecht">
+    <div class="chapter-header">
+      <div class="chapter-num blue">II</div>
+      <h2 class="chapter-title">⚖️ Arbeitsrecht</h2>
+    </div>
+
+    <div class="section" id="arbeitsvertrag">
+      <h3 class="section-title">Arbeitsvertrag – Mindestinhalte (Pflichtangaben)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead class="blue"><tr><th>#</th><th>Pflichtinhalt</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Name und Anschrift der Vertragspartner</td><td>Arbeitgeber XY + Arbeitnehmer Max Muster</td></tr>
+            <tr><td>2</td><td>Beginn des Arbeitsverhältnisses</td><td>01.06.2024</td></tr>
+            <tr><td>3</td><td>Ende (sofern befristet)</td><td>—</td></tr>
+            <tr><td>4</td><td>Arbeitsort / Tätigkeit</td><td>Büro Stuttgart, IT-Support</td></tr>
+            <tr><td>5</td><td>Arbeitsentgelt</td><td>2.700 € brutto/Monat</td></tr>
+            <tr><td>6</td><td>Vereinbarte Arbeitszeit</td><td>40 Stunden/Woche</td></tr>
+            <tr><td>7</td><td>Dauer des Jahresurlaubs</td><td>24 Werktage</td></tr>
+            <tr><td>8</td><td>Kündigungsfristen</td><td>4 Wochen zum 15. oder Monatsende</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Zustandekommen des Arbeitsvertrags</div>
+        <div class="table-wrap" style="margin:0">
+          <table>
+            <tbody>
+              <tr><td><strong>Was ist er?</strong></td><td>Zweiseitiges Rechtsgeschäft zwischen AG und AN</td></tr>
+              <tr><td><strong>Wie?</strong></td><td>Angebot (AG) + Annahme (AN) = 2 übereinstimmende Willenserklärungen</td></tr>
+              <tr><td><strong>Schriftform?</strong></td><td><span class="badge badge-red">NEIN</span> – auch mündlich gültig! (Ausnahme: Ausbildungsvertrag)</td></tr>
+              <tr><td><strong>Mündliche Zusage?</strong></td><td><span class="badge badge-green">Rechtlich bindend!</span></td></tr>
+              <tr><td><strong>Probezeit</strong></td><td>Max. 6 Monate möglich</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="befristung">
+      <h3 class="section-title">Befristeter Arbeitsvertrag (§ 14 TzBfG)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Merkmal</th><th>MIT sachlichem Grund (§ 14 Abs. 1)</th><th>OHNE sachlichen Grund (§ 14 Abs. 2)</th></tr></thead>
+          <tbody>
+            <tr><td>Dauer</td><td>Unbegrenzt</td><td>Max. 2 Jahre</td></tr>
+            <tr><td>Verlängerung</td><td>Beliebig oft</td><td>Max. 3-mal</td></tr>
+            <tr><td>Voraussetzung</td><td>Grund muss vorliegen</td><td>Kein vorheriges AV mit gleichem AG!</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub">Sachliche Gründe für Befristung:</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Grund</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr><td>Vorübergehender Mehrbedarf</td><td>Weihnachtsgeschäft</td></tr>
+            <tr><td>Vertretung</td><td>Krank, Urlaub, Elternzeit</td></tr>
+            <tr><td>Nach Ausbildung</td><td>Berufseinstieg erleichtern</td></tr>
+            <tr><td>Projektarbeit</td><td>IT-Projekt für 1 Jahr</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="kuendigung">
+      <h3 class="section-title">Kündigungsfristen (§ 622 BGB)</h3>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <span>Verlängerte Fristen gelten <strong>NUR für Arbeitgeber</strong>!</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Betriebszugehörigkeit</th><th>Frist Arbeitnehmer</th><th>Frist Arbeitgeber</th></tr></thead>
+          <tbody>
+            <tr><td>Grundfrist</td><td>4 Wochen zum 15. oder Monatsende</td><td>4 Wochen zum 15. oder Monatsende</td></tr>
+            <tr><td>2 Jahre</td><td>4 Wochen</td><td>1 Monat</td></tr>
+            <tr><td>5 Jahre</td><td>4 Wochen</td><td>2 Monate</td></tr>
+            <tr><td>8 Jahre</td><td>4 Wochen</td><td>3 Monate</td></tr>
+            <tr><td>10 Jahre</td><td>4 Wochen</td><td>4 Monate</td></tr>
+            <tr><td>12 Jahre</td><td>4 Wochen</td><td>5 Monate</td></tr>
+            <tr><td>15 Jahre</td><td>4 Wochen</td><td>6 Monate</td></tr>
+            <tr><td>20 Jahre</td><td>4 Wochen</td><td>7 Monate</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">📅 Berechnung Zeitstrahl – Beispiel</div>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-text"><strong>Kündigung abgegeben:</strong> 20. Mai</div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-text"><strong>+ 4 Wochen</strong> = 17. Juni</div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-text">17. Juni &gt; 15. Juni → <strong>Vertragsende: 30. Juni</strong></div></div>
+          <div class="timeline-item"><div class="timeline-dot" style="background:var(--green)"></div><div class="timeline-text"><strong>Frühester Arbeitsbeginn: 1. Juli</strong></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="urlaub">
+      <h3 class="section-title">Urlaub – Bundesurlaubsgesetz (BUrlG)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead class="green"><tr><th>Merkmal</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td>Gesetzlicher Mindesturlaub</td><td>24 Werktage (bei 6-Tage-Woche)</td></tr>
+            <tr><td>Bei 5-Tage-Woche</td><td>20 Arbeitstage (= 4 Wochen)</td></tr>
+            <tr><td>Berechnung</td><td>24 ÷ 6 × 5 = <strong>20 Arbeitstage</strong></td></tr>
+            <tr><td>Wann entsteht Anspruch?</td><td>Nach 6 Monaten Betriebszugehörigkeit</td></tr>
+            <tr><td>Übertragung</td><td>Ins nächste Jahr möglich (bis 31. März)</td></tr>
+            <tr><td>Urlaubsgeld</td><td>Kein gesetzlicher Anspruch (nur wenn vertraglich vereinbart)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="kuendigungsschutz">
+      <h3 class="section-title">Kündigungsschutzgesetz (KSchG)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Merkmal</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td>Gilt für</td><td>Betriebe mit <strong>mehr als 10 Mitarbeitern</strong></td></tr>
+            <tr><td>Persönliche Voraussetzung</td><td>Arbeitnehmer muss mind. <strong>6 Monate</strong> im Betrieb sein (§ 1 KSchG)</td></tr>
+            <tr><td>Ohne Schutz</td><td>Probezeit (erste 6 Monate) – fristlose/fristgemäße Kündigung möglich!</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert alert-info">
+        <span class="alert-icon">📌</span>
+        <span><strong>Prüfungsbeispiel:</strong> Jürgen Munk – AV &lt; 6 Monate → Kündigungsschutz greift <strong>NICHT</strong>! Kündigung (sogar grundlos) möglich! § 1 Abs. 1 KSchG greift nicht.</span>
+      </div>
+    </div>
+
+    <div class="section" id="zeugnis">
+      <h3 class="section-title">Arbeitszeugnis – Zeugnissprache</h3>
+      <div class="alert alert-info">
+        <span class="alert-icon">💡</span>
+        <span><strong>Merkhilfe:</strong> Mehr Verstärker = bessere Note. „stets" + „vollsten" = Sehr gut. Ohne Verstärker = schlechter.</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Schulnote</th><th>Formulierung im Zeugnis</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-green">Sehr gut (1)</span></td><td>stets / immer zur <strong>vollsten</strong> Zufriedenheit</td></tr>
+            <tr><td><span class="badge badge-blue">Gut (2)</span></td><td>zur <strong>vollen</strong> Zufriedenheit</td></tr>
+            <tr><td><span class="badge badge-yellow">Befriedigend (3)</span></td><td>zu unserer vollen Zufriedenheit (ohne „stets")</td></tr>
+            <tr><td><span class="badge badge-yellow">Ausreichend (4)</span></td><td>zu unserer Zufriedenheit</td></tr>
+            <tr><td><span class="badge badge-red">Mangelhaft (5)</span></td><td>im Allgemeinen zu unserer Zufriedenheit</td></tr>
+            <tr><td><span class="badge badge-red">Ungenügend (6)</span></td><td>hat sich bemüht ...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="bewerbung">
+      <h3 class="section-title">Bewerbungsgespräch – Zulässige & Unzulässige Fragen</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Frage</th><th>Zulässig?</th><th>Begründung</th></tr></thead>
+          <tbody>
+            <tr><td>Berufliche Qualifikationen?</td><td><span class="badge badge-green">✅ Zulässig</span></td><td>Beruflich relevant</td></tr>
+            <tr><td>Gesundheitszustand (berufsrelevant)?</td><td><span class="badge badge-green">✅ Zulässig</span></td><td>Z.B. Lebensmittelbetrieb</td></tr>
+            <tr><td>Vorstrafen (berufsrelevant)?</td><td><span class="badge badge-green">✅ Zulässig</span></td><td>Nur wenn relevant</td></tr>
+            <tr><td>Schwangerschaft?</td><td><span class="badge badge-red">❌ Unzulässig</span></td><td>Diskriminierung!</td></tr>
+            <tr><td>Religion / Konfession?</td><td><span class="badge badge-red">❌ Unzulässig</span></td><td>Privatsache</td></tr>
+            <tr><td>Partei- / Gewerkschaftszugehörigkeit?</td><td><span class="badge badge-red">❌ Unzulässig</span></td><td>Privatsache</td></tr>
+            <tr><td>Behinderung (nicht berufsrelevant)?</td><td><span class="badge badge-red">❌ Unzulässig</span></td><td>AGG – Diskriminierung</td></tr>
+            <tr><td>Familienstand / Kinder?</td><td><span class="badge badge-red">❌ Unzulässig</span></td><td>Privatsache</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="lohnfortzahlung">
+      <h3 class="section-title">Lohnfortzahlung im Krankheitsfall</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Zeitraum</th><th>Wer zahlt?</th><th>Was wird gezahlt?</th></tr></thead>
+          <tbody>
+            <tr><td>Erste 6 Wochen</td><td>Arbeitgeber</td><td>Voller Lohn (100%) = Lohnfortzahlung</td></tr>
+            <tr><td>Ab 7. Woche</td><td>Krankenkasse</td><td>Krankengeld (ca. 70% des Lohns)</td></tr>
+            <tr><td>Max. 72 Wochen</td><td>Krankenkasse</td><td>Krankengeld</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="betriebsrat">
+      <h3 class="section-title">Betriebsrat – Mitbestimmung</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Stufe</th><th>Art</th><th>Themen</th><th>Folge ohne Zustimmung</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Stufe 1</strong></td><td>Echte Mitbestimmung</td><td>Arbeitszeiten, Überstunden, Pausen, Urlaub, Lohn, Kameras</td><td><span class="badge badge-red">Maßnahme UNWIRKSAM!</span></td></tr>
+            <tr><td><strong>Stufe 2</strong></td><td>Mitwirkungsrecht</td><td>Einstellungen, Versetzungen, Kündigungen</td><td><span class="badge badge-red">Kündigung UNWIRKSAM!</span></td></tr>
+            <tr><td><strong>Stufe 3</strong></td><td>Informationsrecht</td><td>Jahresabschluss, wirtschaftliche Lage</td><td>Nur wissen, kein Einfluss</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Schutz der Betriebsratsmitglieder:</h3>
+      <div class="table-wrap">
+        <table>
+          <thead class="green"><tr><th>Schutz</th><th>Bedeutung</th></tr></thead>
+          <tbody>
+            <tr><td>Keine Kündigung</td><td>Während Amtszeit (4 Jahre) + 1 Jahr danach</td></tr>
+            <tr><td>Keine Benachteiligung</td><td>Keine schlechteren Aufgaben/Schichten</td></tr>
+            <tr><td>Freistellung</td><td>Lohn läuft weiter bei Betriebsratsarbeit</td></tr>
+            <tr><td>Schulungen</td><td>Auf Kosten des Arbeitgebers</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="gewerkschaft">
+      <h3 class="section-title">Gewerkschaft & Tarifvertrag</h3>
+      <div class="grid-2">
+        <div class="table-wrap" style="margin:0">
+          <table>
+            <thead><tr><th>Begriff</th><th>Bedeutung</th></tr></thead>
+            <tbody>
+              <tr><td>Gewerkschaft</td><td>Interessenvertretung der Arbeitnehmer</td></tr>
+              <tr><td>Arbeitgeberverband</td><td>Interessenvertretung der Arbeitgeber</td></tr>
+              <tr><td>Tarifvertrag</td><td>Vereinbarung zwischen Gewerkschaft + Arbeitgeberverband</td></tr>
+              <tr><td>Allgemeinverbindlichkeit</td><td>Gilt für ALLE – auch Nichtmitglieder!</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap" style="margin:0">
+          <table>
+            <thead><tr><th>Merkmal</th><th>Lohntarifvertrag</th><th>Manteltarifvertrag</th></tr></thead>
+            <tbody>
+              <tr><td>Laufzeit</td><td>1–2 Jahre</td><td>3–5 Jahre</td></tr>
+              <tr><td>Inhalt</td><td>Löhne/Gehälter</td><td>Allg. Arbeitsbedingungen</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3 class="sub">Streik & Aussperrung:</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Begriff</th><th>Wer?</th><th>Was passiert?</th><th>Ziel</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Streik</strong></td><td>Arbeitnehmer (gewerkschaftlich)</td><td>Legen Arbeit nieder</td><td>Forderungen durchsetzen</td></tr>
+            <tr><td><strong>Aussperrung</strong></td><td>Arbeitgeber</td><td>Schließen AN von Arbeit aus, zahlen keinen Lohn</td><td>Gewerkschaft zum Einlenken bringen</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="nettolohn">
+      <h3 class="section-title">Brutto- & Nettolohn</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Position</th><th>Betrag</th><th>Wer zahlt?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Bruttolohn</strong></td><td>2.700,00 €</td><td>Im Vertrag vereinbart</td></tr>
+            <tr><td>– Lohnsteuer</td><td>– variabel</td><td>Arbeitnehmer</td></tr>
+            <tr><td>– Kirchensteuer</td><td>– variabel</td><td>Arbeitnehmer</td></tr>
+            <tr><td>– Krankenversicherung (7,3%)</td><td>– 197,10 €</td><td>Arbeitnehmer</td></tr>
+            <tr><td>– Rentenversicherung (9,3%)</td><td>– 251,10 €</td><td>Arbeitnehmer</td></tr>
+            <tr><td>– Pflegeversicherung (1,525%)</td><td>– 41,18 €</td><td>Arbeitnehmer</td></tr>
+            <tr><td>– Arbeitslosenversicherung (1,2%)</td><td>– 32,40 €</td><td>Arbeitnehmer</td></tr>
+            <tr style="background:var(--green-bg)"><td><strong>= Nettolohn</strong></td><td><strong>1.617,53 €</strong></td><td>Kommt aufs Konto!</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Sozialversicherung – Beitragssätze:</h3>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <span>Arbeitgeber zahlt <strong>ZUSÄTZLICH</strong> zum Bruttolohn seinen Anteil!</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead class="blue"><tr><th>Versicherung</th><th>Gesamt</th><th>AN-Anteil</th><th>AG-Anteil</th><th>Wichtigste Leistungen</th></tr></thead>
+          <tbody>
+            <tr><td>Krankenversicherung (KV)</td><td>14,6% + 1,2% Zusatz</td><td>7,3% + 0,6%</td><td>7,3% + 0,6%</td><td>Arztbesuche, Krankenhaus, Krankengeld ab 7. Woche</td></tr>
+            <tr><td>Pflegeversicherung (PV)</td><td>3,05% (+0,35% kinderlos)</td><td>1,525% (+0,35%)</td><td>1,525%</td><td>Pflegeleistungen</td></tr>
+            <tr><td>Arbeitslosenversicherung (AV)</td><td>2,6%</td><td>1,3%</td><td>1,3%</td><td>Arbeitslosengeld, Kurzarbeitergeld</td></tr>
+            <tr><td>Rentenversicherung (RV)</td><td>18,6%</td><td>9,3%</td><td>9,3%</td><td>Altersrente, Erwerbsminderungsrente</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="einkommensteuer">
+      <h3 class="section-title">Einkommensteuer</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Kategorie</th><th>Beispiele</th><th>Berechnung</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-green">Werbungskosten</span></td><td>Fahrtkosten zur Arbeit</td><td>0,30 € × km × Arbeitstage</td></tr>
+            <tr><td><span class="badge badge-green">Werbungskosten</span></td><td>Gewerkschaftsbeitrag</td><td>Tatsächlicher Betrag</td></tr>
+            <tr><td><span class="badge badge-green">Werbungskosten</span></td><td>Berufskleidung (Spezial)</td><td>Tatsächlicher Betrag</td></tr>
+            <tr><td><span class="badge badge-blue">Sonderausgaben</span></td><td>Kirchensteuer</td><td>Vollständig absetzbar</td></tr>
+            <tr><td><span class="badge badge-blue">Sonderausgaben</span></td><td>Spenden</td><td>Max. 20% des Einkommens</td></tr>
+            <tr><td><span class="badge badge-red">NICHT absetzbar</span></td><td>Fußballkarte, Urlaub, Mittagessen (Kantine)</td><td>Rein privat!</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <span><strong>Grundfreibetrag 2024 = 12.816 €</strong> → Darunter = keine Steuern!</span>
+      </div>
+    </div>
+
+    <div class="section" id="arbeitsschutz">
+      <h3 class="section-title">Jugendarbeitsschutzgesetz (JArbSchG)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Merkmal</th><th>Jugendliche (15–17 J.)</th><th>Erwachsene (ab 18 J.)</th></tr></thead>
+          <tbody>
+            <tr><td>Max. Stunden/Tag</td><td>8 Stunden</td><td>8 Stunden (max. 10)</td></tr>
+            <tr><td>Max. Stunden/Woche</td><td>40 Stunden</td><td>48 Stunden</td></tr>
+            <tr><td>Nachtarbeit</td><td><span class="badge badge-red">Verboten</span> (vor 6 Uhr / nach 20 Uhr)</td><td>Erlaubt</td></tr>
+            <tr><td>Samstags- / Sonntagsarbeit</td><td>Nur ausnahmsweise</td><td>Erlaubt</td></tr>
+            <tr><td>Pause ab 4,5h</td><td>Mind. 30 Min.</td><td>Keine Pflicht</td></tr>
+            <tr><td>Pause ab 6h</td><td>Mind. 60 Min.</td><td>30 Min.</td></tr>
+            <tr><td>Ruhezeit zwischen Arbeitstagen</td><td>Mind. 12 Stunden</td><td>Mind. 11 Stunden</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub">Urlaub für Jugendliche:</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Alter</th><th>Mindesturlaub</th></tr></thead>
+          <tbody>
+            <tr><td>Unter 16 Jahre</td><td>30 Werktage</td></tr>
+            <tr><td>Unter 17 Jahre</td><td>27 Werktage</td></tr>
+            <tr><td>Unter 18 Jahre</td><td>25 Werktage</td></tr>
+            <tr><td>Erwachsene</td><td>24 Werktage</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert alert-info">
+        <span class="alert-icon">💡</span>
+        <span><strong>Je jünger = mehr Urlaub!</strong></span>
+      </div>
+    </div>
+
+    <div class="section" id="mutterschutz">
+      <h3 class="section-title">Mutterschutzgesetz (MuSchG)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead class="orange"><tr><th>Phase</th><th>Dauer</th><th>Was gilt?</th></tr></thead>
+          <tbody>
+            <tr><td>Vor der Geburt</td><td>6 Wochen</td><td>Beschäftigungsverbot (außer auf Wunsch der Mutter)</td></tr>
+            <tr><td>Nach der Geburt</td><td>8 Wochen</td><td><strong>Absolutes</strong> Beschäftigungsverbot!</td></tr>
+            <tr><td>Nach Frühgeburt/Mehrlinge</td><td>12 Wochen</td><td>Verlängertes Beschäftigungsverbot</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert alert-danger">
+        <span class="alert-icon">⚠️</span>
+        <span>Kündigungsschutz ab Beginn der Schwangerschaft bis 4 Monate nach Geburt – gilt auch rückwirkend wenn AG nichts weiß!</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Mutterschutzlohn</div>
+          Wer zahlt: <strong>Arbeitgeber</strong> (wird erstattet)<br>
+          Wie viel: Durchschnittslohn der letzten 3 Monate<br>
+          Wann: Während Beschäftigungsverboten
+        </div>
+        <div class="card">
+          <div class="card-title">Mutterschaftsgeld</div>
+          Wer zahlt: <strong>Krankenkasse</strong><br>
+          Wie viel: Max. 13 €/Tag + AG zahlt Differenz<br>
+          Wann: 6 Wochen vor + 8 Wochen nach Geburt
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Elternzeit (BEEG)</div>
+        <div class="table-wrap" style="margin:0">
+          <table>
+            <tbody>
+              <tr><td>Wer kann?</td><td><strong>Mutter UND Vater!</strong></td></tr>
+              <tr><td>Wie lange?</td><td>Bis zu 3 Jahre pro Kind (bis 8. Geburtstag)</td></tr>
+              <tr><td>Anmeldung</td><td>Mind. 7 Wochen vorher</td></tr>
+              <tr><td>Elterngeld</td><td>65% des Nettoeinkommens (max. 1.800 €/Monat)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       III. VERTRAGSRECHT
+  ══════════════════════════════════════════ -->
+  <div class="chapter" id="vertragsrecht">
+    <div class="chapter-header">
+      <div class="chapter-num orange">III</div>
+      <h2 class="chapter-title">📜 Vertragsrecht & BGB</h2>
+    </div>
+
+    <div class="section" id="rechtsgeschaefte">
+      <h3 class="section-title">Rechtsgeschäfte</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Art</th><th>Willenserklärungen</th><th>Unterart</th><th>Beispiele</th></tr></thead>
+          <tbody>
+            <tr><td>Einseitig</td><td>1 WE</td><td>Empfangsbedürftig</td><td>Kündigung, Anfechtung, Vollmacht</td></tr>
+            <tr><td>Einseitig</td><td>1 WE</td><td>Nicht empfangsbedürftig</td><td>Testament, Aufgabe des Eigentums</td></tr>
+            <tr><td>Zweiseitig</td><td>Mind. 2 WE</td><td>Einseitig verpflichtend</td><td>Schenkung</td></tr>
+            <tr><td>Zweiseitig</td><td>Mind. 2 WE</td><td>Zweiseitig verpflichtend</td><td>Kaufvertrag, Arbeitsvertrag, Mietvertrag</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="willenserklarung">
+      <h3 class="section-title">Willenserklärung – Arten & Voraussetzungen</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Form</th><th>Bedeutung</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr><td>Ausdrücklich mündlich</td><td>Direkt gesagt</td><td>„Ich kaufe das!"</td></tr>
+            <tr><td>Ausdrücklich schriftlich</td><td>Unterschrift, E-Mail</td><td>Online-Bestellung</td></tr>
+            <tr><td>Zeichen</td><td>Geste</td><td>Handzeichen bei Auktion</td></tr>
+            <tr><td>Konkludent</td><td>Durch Verhalten</td><td>Ware aufs Kassenband legen</td></tr>
+            <tr><td>Schweigen</td><td colspan="2"><span class="badge badge-red">Grundsätzlich KEINE WE!</span> (Ausnahme: Vertrag läuft aus)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="kaufvertrag">
+      <h3 class="section-title">Kaufvertrag – Zustandekommen</h3>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <span>Ware im Supermarkt-Regal / Preisschild / Schaufenster = <strong>KEIN Angebot!</strong> = Invitatio ad offerendum!</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Schritt</th><th>Wer?</th><th>Was?</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr><td>Angebot</td><td>Käufer/Verkäufer</td><td>1. Willenserklärung</td><td>„Ich verkaufe für 100 €"</td></tr>
+            <tr><td>Annahme</td><td>Andere Seite</td><td>2. Willenserklärung</td><td>„Ich kaufe es!"</td></tr>
+            <tr><td style="background:var(--green-bg)"><strong>Kaufvertrag ✅</strong></td><td colspan="3">Einigung → Kaufvertrag geschlossen</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="eigentumsübertragung">
+      <h3 class="section-title">Eigentumsübertragung (§ 929 BGB)</h3>
+      <div class="alert alert-info">
+        <span class="alert-icon">💡</span>
+        <span><strong>Kauf ≠ Eigentum!</strong> Kaufvertrag = Recht auf Ware. Übergabe + Einigung = erst JETZT wird man Eigentümer!</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>Verpflichtungsgeschäft</th><th>Erfüllungsgeschäft</th></tr></thead>
+          <tbody>
+            <tr><td>Was?</td><td>Pflichten werden vereinbart</td><td>Pflichten werden erfüllt</td></tr>
+            <tr><td>Wann?</td><td>Bei Vertragsschluss</td><td>Bei Übergabe / Zahlung</td></tr>
+            <tr><td>Paragraph</td><td>§ 433 BGB</td><td>§ 362 BGB</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="maengelrechte">
+      <h3 class="section-title">Mängelrechte (§§ 437–441 BGB)</h3>
+      <div class="alert alert-danger">
+        <span class="alert-icon">⚠️</span>
+        <span>Reihenfolge <strong>ZWINGEND</strong> einhalten! Kein sofortiger Rücktritt – erst Nacherfüllung!</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Stufe</th><th>Recht</th><th>§</th><th>Wann?</th></tr></thead>
+          <tbody>
+            <tr style="background:var(--green-bg)"><td><strong>1. VORRANGIG</strong></td><td>Nacherfüllung</td><td>§ 439</td><td><strong>ZUERST! Immer!</strong></td></tr>
+            <tr><td>2. NACHRANGIG</td><td>Rücktritt</td><td>§ 440</td><td>Erst nach Nacherfüllung!</td></tr>
+            <tr><td>2. NACHRANGIG</td><td>Minderung</td><td>§ 441</td><td>Alternativ zu Rücktritt</td></tr>
+            <tr><td>3. ZUSÄTZLICH</td><td>Schadensersatz</td><td>§ 440</td><td>Bei Verschulden des Verkäufers</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">Nacherfüllung Details (§ 439)</div>
+        Käufer wählt: <strong>Reparatur ODER Neulieferung</strong><br>
+        Kosten trägt: Verkäufer (ALLE Kosten!)<br>
+        Fehlgeschlagen: nach 2 erfolglosen Versuchen<br>
+        Nacherfüllung verweigert: sofortiger Rücktritt möglich ✅
+      </div>
+    </div>
+
+    <div class="section" id="widerruf">
+      <h3 class="section-title">Widerrufsrecht (§§ 312g, 355, 356 BGB)</h3>
+      <div class="compare">
+        <div class="compare-col positive">
+          <h4>✅ Widerrufsrecht gilt bei</h4>
+          <ul>
+            <li>Online-Kauf (Fernabsatz)</li>
+            <li>Telefon-Bestellung</li>
+            <li>Katalog-Kauf</li>
+            <li>Frist: 14 Tage ab Erhalt der Ware</li>
+            <li>Rücksendekosten: Verkäufer!</li>
+          </ul>
+        </div>
+        <div class="compare-col negative">
+          <h4>❌ Kein Widerrufsrecht bei</h4>
+          <ul>
+            <li>Stationärem Handel (Laden)</li>
+            <li>Verderbliche Waren</li>
+            <li>Individuell angefertigt</li>
+            <li>Frist abgelaufen (nach 14 Tagen)</li>
+            <li>Geöffnete Hygieneartikel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="agb">
+      <h3 class="section-title">AGB – Allgemeine Geschäftsbedingungen</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>§</th><th>Inhalt</th><th>Folge</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr><td><strong>§ 305b</strong></td><td>Individuelle Absprachen haben Vorrang!</td><td>Absprache gilt, nicht AGB!</td><td>Verkäufer verspricht 3 Tage → gilt!</td></tr>
+            <tr><td><strong>§ 305c</strong></td><td>Überraschende Klauseln unwirksam</td><td>Klausel gilt nicht!</td><td>Automatische Garantieverlängerung</td></tr>
+            <tr><td><strong>§ 307</strong></td><td>Unangemessene Benachteiligung unwirksam</td><td>Klausel gilt nicht!</td><td>50/50 Nacherfüllungskosten</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       IV. FINANZEN & WIRTSCHAFT
+  ══════════════════════════════════════════ -->
+  <div class="chapter" id="finanzen">
+    <div class="chapter-header">
+      <div class="chapter-num green">IV</div>
+      <h2 class="chapter-title">💰 Finanzen, Wirtschaft & Unternehmensrecht</h2>
+    </div>
+
+    <div class="section" id="kredit">
+      <h3 class="section-title">Kreditvergleich & Haushalt</h3>
+      <div class="formula">
+        Gesamtbetrag = <span>(Rate × Monate)</span> + Anzahlung
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>Hausbank</th><th>Möbelhaus</th></tr></thead>
+          <tbody>
+            <tr><td>Nettodarlehen</td><td>3.000 €</td><td>3.000 € (Anzahlung)</td></tr>
+            <tr><td>Laufzeit</td><td>48 Monate</td><td>36 Monate</td></tr>
+            <tr><td>Rate</td><td>69,95 €</td><td>91,33 €</td></tr>
+            <tr><td>Effektivzins</td><td>2,98%</td><td>3,20%</td></tr>
+            <tr><td>Gesamtbetrag</td><td>69,95 × 48 + 3.000 = <strong>6.357,60 €</strong></td><td>91,33 × 36 + 3.000 = <strong>6.287,88 €</strong></td></tr>
+            <tr><td>Empfehlung</td><td><span class="badge badge-red">❌ Teurer</span></td><td><span class="badge badge-green">✅ Günstiger</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="versicherungen">
+      <h3 class="section-title">Versicherungen nach Lebenssituation</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Lebenssituation</th><th>Privathaftpflicht</th><th>Berufsunfähigkeit</th><th>Risiko-Leben</th><th>Unfall</th></tr></thead>
+          <tbody>
+            <tr><td>Alleinstehende Junioren</td><td>●●●●●</td><td>●●●●●</td><td>●</td><td>●●●●</td></tr>
+            <tr><td>Ehe / berufstätige Singles</td><td>●●●●●</td><td>●●●●●</td><td>●●●</td><td>●●●●</td></tr>
+            <tr><td>Familie + Alleinerziehende</td><td>●●●●●</td><td>●●●●●</td><td>●●●●●</td><td>●●●●●</td></tr>
+            <tr><td>Familie große Kinder</td><td>●●●●●</td><td>●●●●</td><td>●●●●</td><td>●●</td></tr>
+            <tr><td>Ehepaar nach Kindererziehung</td><td>●●●●●</td><td>●●●</td><td>●●●</td><td>●●</td></tr>
+            <tr><td>Alleinstehende Rentner</td><td>●●●●●</td><td>●</td><td>●</td><td>●</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="zahlungsarten">
+      <h3 class="section-title">Zahlungsarten</h3>
+      <div class="alert alert-info">
+        <span class="alert-icon">💡</span>
+        <span>Risiko für Käufer: <strong>Vorkasse (hoch)</strong> → Lastschrift/Kreditkarte (mittel) → <strong>Rechnung/Nachnahme (gering)</strong></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Zahlungsart</th><th>Wie?</th><th>Vorteil</th><th>Nachteil/Risiko</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Vorkasse</strong></td><td>Käufer zahlt VOR Lieferung</td><td>Oft Rabatt (z.B. 3%)</td><td><span class="badge badge-red">Höchstes Risiko!</span></td></tr>
+            <tr><td><strong>Rechnung</strong></td><td>Käufer zahlt NACH Lieferung</td><td>Ware erst prüfen, dann zahlen</td><td>Risiko für Verkäufer</td></tr>
+            <tr><td><strong>Lastschrift</strong></td><td>Bank zieht automatisch ab</td><td>Automatisch + rückbuchbar (8 Wochen)</td><td>Fremdzugriff möglich</td></tr>
+            <tr><td><strong>Kreditkarte</strong></td><td>Zahlung auf Kredit</td><td>Bonuspunkte, weltweit nutzbar</td><td>Kartengebühr</td></tr>
+            <tr><td><strong>Nachnahme</strong></td><td>Zahlung bei Lieferung</td><td>Sicher für beide Seiten</td><td>Zusätzliche Gebühr (ca. 3,50 €)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="marktformen">
+      <h3 class="section-title">Marktformen & Preisbildung</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Marktform</th><th>Anbieter</th><th>Nachfrager</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Polypol</strong></td><td>Viele</td><td>Viele</td><td>Gemüsemarkt, Restaurants, Friseure</td></tr>
+            <tr><td><strong>Angebotsoligopol</strong></td><td>Wenige</td><td>Viele</td><td>Mobilfunk (O2, Vodafone, Telekom)</td></tr>
+            <tr><td><strong>Angebotsmonopol</strong></td><td>Einer</td><td>Viele</td><td>Früher: Deutsche Post, Bahn (Netz)</td></tr>
+            <tr><td><strong>Nachfrageoligopol</strong></td><td>Viele</td><td>Wenige</td><td>Rüstungsindustrie</td></tr>
+            <tr><td><strong>Bilaterales Monopol</strong></td><td>Einer</td><td>Einer</td><td>Seltene Spezialmärkte</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <a class="more_info" href="markformen.html">Mehr Informationen zu Marktformen</a>
+      <h3 class="sub">Veränderungen des Gleichgewichtspreises:</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Situation</th><th>Auswirkung auf Preis</th></tr></thead>
+          <tbody>
+            <tr><td>Nachfrage steigt (mehr Käufer)</td><td>Preis steigt ↑</td></tr>
+            <tr><td>Nachfrage sinkt (weniger Käufer)</td><td>Preis sinkt ↓</td></tr>
+            <tr><td>Angebot steigt (mehr Anbieter)</td><td>Preis sinkt ↓</td></tr>
+            <tr><td>Angebot sinkt (weniger Anbieter)</td><td>Preis steigt ↑</td></tr>
+          </tbody>
+          
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="konjunktur">
+      <h3 class="section-title">Konjunkturzyklus – 4 Phasen</h3>
+      <div class="phases">
+        <div class="phase-card phase-green">
+          <h4>📈 Aufschwung</h4>
+          <p>(Expansion)<br>BIP wächst ↑<br>Beschäftigung steigt<br>Preise leicht steigend</p>
+        </div>
+        <div class="phase-card phase-blue">
+          <h4>🚀 Boom</h4>
+          <p>(Hochkonjunktur)<br>BIP Maximum ↑↑<br>Beschäftigung sehr hoch<br>Inflation!</p>
+        </div>
+        <div class="phase-card phase-orange">
+          <h4>📉 Abschwung</h4>
+          <p>(Rezession)<br>BIP schrumpft ↓<br>Beschäftigung sinkt<br>Preise sinkend</p>
+        </div>
+        <div class="phase-card phase-red">
+          <h4>⬇️ Depression</h4>
+          <p>(Tiefphase)<br>BIP Minimum ↓↓<br>Sehr hohe Arbeitslosigkeit<br>Alles sehr niedrig</p>
+        </div>
+      </div>
+      <div class="alert alert-info">
+        <span class="alert-icon">💡</span>
+        <span><strong>Merkhilfe:</strong> Boom = ALLES hoch! Depression = ALLES niedrig! Nur Arbeitslosigkeit umgekehrt: Boom = niedrig, Depression = hoch!</span>
+      </div>
+
+      <h3 class="sub">Konjunkturindikatoren:</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Indikator</th><th>Art</th><th>Aufschwung</th><th>Boom</th><th>Abschwung</th><th>Depression</th></tr></thead>
+          <tbody>
+            <tr><td>Auftragseingänge</td><td><span class="badge badge-yellow">Früh</span></td><td>Steigen</td><td>Sehr hoch</td><td>Sinken</td><td>Sehr niedrig</td></tr>
+            <tr><td>Aktienkurse</td><td><span class="badge badge-yellow">Früh</span></td><td>Steigen</td><td>Hoch</td><td>Sinken</td><td>Niedrig</td></tr>
+            <tr><td>BIP</td><td><span class="badge badge-blue">Präsenz</span></td><td>Wächst</td><td>Stark</td><td>Schrumpft</td><td>Stark negativ</td></tr>
+            <tr><td>Inflation</td><td><span class="badge badge-blue">Präsenz</span></td><td>Leicht steigt</td><td>Hoch</td><td>Sinkt</td><td>Sehr niedrig</td></tr>
+            <tr><td>Arbeitslosigkeit</td><td><span class="badge badge-red">Spät</span></td><td>Sinkt</td><td>Niedrig</td><td>Steigt</td><td>Sehr hoch</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="staatlich">
+      <h3 class="section-title">Staatliche Einflussnahme</h3>
+      <div class="compare">
+        <div class="compare-col positive">
+          <h4>🏛️ Fiskalpolitik</h4>
+          <ul>
+            <li>Wer: Staat / Bundesregierung</li>
+            <li>Wie: Steuern + Staatsausgaben</li>
+            <li>Unabhängig? Nein – politisch</li>
+            <li>Wirkung: Direkt aber langsam</li>
+          </ul>
+        </div>
+        <div class="compare-col negative">
+          <h4>🏦 Geldpolitik (EZB)</h4>
+          <ul>
+            <li>Wer: Europäische Zentralbank (EZB)</li>
+            <li>Wie: Leitzins + Geldmenge</li>
+            <li>Unabhängig? Ja – vollständig!</li>
+            <li>Wirkung: Indirekt über Banken</li>
+          </ul>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Phase</th><th>Fiskalpolitik</th><th>Geldpolitik (EZB)</th><th>Ziel</th></tr></thead>
+          <tbody>
+            <tr><td>Abschwung</td><td>Mehr Ausgaben + Steuern senken</td><td>Zinsen SENKEN</td><td>Wirtschaft ankurbeln</td></tr>
+            <tr><td>Boom</td><td>Weniger Ausgaben + Steuern erhöhen</td><td>Zinsen ERHÖHEN</td><td>Inflation bremsen</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="inflation">
+      <h3 class="section-title">Inflation & Verbraucherpreisindex</h3>
+      <div class="formula">
+        Inflationsrate = <span>(aktueller Preis – alter Preis)</span> ÷ alter Preis × 100
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>Gewinner bei Inflation</th><th>Verlierer bei Inflation</th></tr></thead>
+          <tbody>
+            <tr><td></td><td>Schuldner, Immobilienbesitzer, Staat</td><td>Sparer, Rentner, Gläubiger</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub">Warenkorb – Gewichtung 2015:</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Kategorie</th><th>Gewichtung</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Wohnung / Energie</strong></td><td>32,47% ← Größter Posten!</td></tr>
+            <tr><td>Verkehr</td><td>12,90%</td></tr>
+            <tr><td>Freizeit / Kultur</td><td>11,34%</td></tr>
+            <tr><td>Nahrungsmittel</td><td>9,69%</td></tr>
+            <tr><td>Möbel / Haushalt</td><td>5,00%</td></tr>
+            <tr><td>Sonstiges</td><td>28,60%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="rechtsformen">
+      <h3 class="section-title">Rechtsformen – Vollständiger Vergleich</h3>
+      <div class="table-wrap">
+        <table class="rf-table">
+          <thead><tr><th>Merkmal</th><th>Einzelunt.</th><th>GbR</th><th>OHG</th><th>KG</th><th>GmbH</th><th>UG</th><th>AG</th></tr></thead>
+          <tbody>
+            <tr><td>Kategorie</td><td>Einzelunternehmen</td><td colspan="3">Personengesellschaft</td><td colspan="3">Kapitalgesellschaft</td></tr>
+            <tr><td>Gründung</td><td>1 Person</td><td>Mind. 2</td><td>Mind. 2</td><td>Mind. 2</td><td>1 oder mehr</td><td>1 oder mehr</td><td>1 oder mehr</td></tr>
+            <tr><td>Mindestkapital</td><td>Keins</td><td>Keins</td><td>Keins</td><td>Keins</td><td><strong>25.000 €</strong></td><td>Ab 1 €</td><td><strong>50.000 €</strong></td></tr>
+            <tr><td>Notar</td><td>Nein</td><td>Nein</td><td>Nein</td><td>Nein</td><td>Ja!</td><td>Ja!</td><td>Ja!</td></tr>
+            <tr><td>Haftung</td><td>Unbeschränkt</td><td>Unbeschränkt</td><td>Unbeschränkt</td><td>Kompl.: unbeschr. Kommand.: Einlage</td><td><span class="badge badge-green">Beschränkt</span></td><td><span class="badge badge-green">Beschränkt</span></td><td><span class="badge badge-green">Beschränkt</span></td></tr>
+            <tr><td>Privatvermögen sicher?</td><td>Nein ❌</td><td>Nein ❌</td><td>Nein ❌</td><td>Kompl.: Nein / Kommand.: Ja</td><td>Ja ✅</td><td>Ja ✅</td><td>Ja ✅</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="selbststaendigkeit">
+      <h3 class="section-title">Selbstständigkeit – Chancen & Gefahren</h3>
+      <div class="compare">
+        <div class="compare-col positive">
+          <h4>✅ Chancen</h4>
+          <ul>
+            <li>Eigener Chef – volle Entscheidungsfreiheit</li>
+            <li>Höheres Einkommenspotenzial</li>
+            <li>Selbstverwirklichung</li>
+            <li>Flexible Arbeitszeiten</li>
+            <li>Direkte Früchte der Arbeit</li>
+          </ul>
+        </div>
+        <div class="compare-col negative">
+          <h4>⚠️ Gefahren</h4>
+          <ul>
+            <li>Volles finanzielles Risiko</li>
+            <li>Kein Kündigungsschutz</li>
+            <li>Keine garantierten Einnahmen</li>
+            <li>Sozialversicherung selbst zahlen</li>
+            <li>Insolvenzrisiko</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMELN -->
+    <div class="section" id="formeln">
+      <h3 class="section-title">📐 Alle Berechnungsformeln auf einen Blick</h3>
+      <div class="card">
+        <div class="formula">Gesamtbetrag Kredit = <span>Rate × Monate</span> + Anzahlung</div>
+        <div class="formula">Haushaltsplan: <span>Einnahmen – Ausgaben</span> = Überschuss</div>
+        <div class="formula">Fahrtkosten = <span>km × Arbeitstage × 0,30 €</span></div>
+        <div class="formula">Inflationsrate = <span>(neu – alt) ÷ alt × 100</span></div>
+        <div class="formula">Nettolohn = <span>Brutto – Steuern – Sozialversicherung</span></div>
+        <div class="formula">Kündigungsfrist: <span>Datum + 4 Wochen → 15. oder Monatsende</span></div>
+        <div class="formula">Urlaubstage (5-Tage-Woche): <span>24 Werktage ÷ 6 × 5 = 20 Arbeitstage</span></div>
+        <div class="formula">Kirchensteuer: <span>8% × Lohnsteuer</span></div>
+      </div>
+    </div>
+
+  </div><!-- end chapter IV -->
+
+</main>
+
+<a href="#top" class="back-top" title="Nach oben">↑</a>
+
+</body>
+</html>
