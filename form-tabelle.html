@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8">
+		<title>Formular</title>
+		<style>
+            h1{
+                font-family: Arial;
+                
+            }
+            h2{
+                font-family: Arial;
+                color: green;
+            }
+		</style>
+	</head>
+
+	<body>
+		<form action="datenbak.php" method="POST">
+			<h1>Automatischer Messplatz - Kapazitätsmessung</h1>
+
+		<table>
+
+			<tboby>
+				<h2>Eingabe der Akkudaten</h2>
+
+				<tr>
+					<td>
+						<label for="aid">
+							Akku ID
+						</label>
+						
+					</td>
+					<td>
+						<input type="text" required id="aid">
+					</td>
+				</tr>
+				<tr>
+					<td>
+                        <label for="nkpz">
+                            Nennkapazität
+                        </label>
+					</td>
+					<td>
+						<input type="text" required id="nkpz">
+					</td>
+				</tr>
+				<tr>
+
+					<td>
+                        <label for="hrs">
+                            Hersteller: 
+                        </label>
+                    </td>
+					<td>
+                        <select name="hersteller" id="hrs">
+                            <option value="" disabled selected> Bitte Hersteller wählen</option>
+                            <option value="panasonic">Panasonic</option>
+                            <option value="varta">Varta</option>
+                            <option value="duracell">Duracell</option>
+                        </select>
+                    </td>
+				</tr>
+				<tr>
+					<td>
+                        <input type="submit" value="Absenden">
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+    </body>
+</html>
